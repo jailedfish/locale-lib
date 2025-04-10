@@ -1,9 +1,9 @@
 [tool.poetry]
 name = "locale-lib"
-version = "1.0.0"
-description = ""
+version = "1.0.2"
+description = "Simple lib for localisation your services."
 authors = ["cabup <spamgate1945@gmail.com>"]
-license = "GNU GPLv3"
+license = "GPLv3+"
 readme = "README.md"
 packages = [
     {include="locale-lib"}
