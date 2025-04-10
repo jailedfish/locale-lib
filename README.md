@@ -43,7 +43,7 @@ f_time_now: Сейчас:/ {time}
 * To add new line use `\n` in locale file
 * `locale.<string>` (or `locale.get(<string>)`) returning instance of `str` class and might be formatted via `format()` method
 * Locale file should look like `locale_<country_code>.lc`, other will be skipped
-* 
+
 ## How it's meant to be used
 * Standard strings should look like `var_name: Variable value`
 * F-strings should look like `f_var_name: Variable {param_a} {param_d} {param_c} value`
