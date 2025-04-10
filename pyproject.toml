@@ -2,7 +2,7 @@
 name = "locale-lib"
 version = "1.0.0"
 description = ""
-authors = ["cabup <pass@localhost>"]
+authors = ["cabup <spamgate1945@gmail.com>"]
 license = "GNU GPLv3"
 readme = "README.md"
 packages = [
@@ -10,7 +10,6 @@ packages = [
 ]
 [tool.poetry.dependencies]
 python = "^3.10"
-
 
 [build-system]
 requires = ["poetry-core"]
