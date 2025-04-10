@@ -28,6 +28,8 @@ class LocaleManager:
     locales: list[Locale] = []
 
     def __init__(self, locale_folder: str):
+        if not os.path.exists(locale_folder):
+            raise FileNotFoundError(f'locale folder {locale_folder} not found')
         self.locales_folder = locale_folder
 
     def setup(self):
