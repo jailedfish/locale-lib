@@ -43,8 +43,8 @@ class LocaleManager:
                                 self.messages[i].add(code, val)
                                 break
                         else:
-                            continue
-                        self.messages.append(Message(key, {code: val}))
+                            self.messages.append(Message(key, {code: val}))
+                        
 
             return self
 
