@@ -9,12 +9,12 @@ class Message:
     def __init__(self, name:str, locales: dict[str, str], default_locale: Optional[str]):
         self.locales = locales
         self.name = name
-        self._default_locale = default_locale
+        self._default_locale = default_locale if default_locale is not None else ''
     
     def localed(self, locale_id: str):
         try:
             if self._default_locale:
-                return self.locales.get(locale_id, self.locales[self._default_locale])
+                return self.locales.get(locale_id, self._default_locale.format(message=self.name, locale_id=locale_id))
             return self.locales['locale_id']
         except KeyError:
             raise KeyError(f'could not find {locale_id} version of {self.name}')
@@ -30,6 +30,8 @@ class LocaleManager:
     locales: list[str] = []
     
     def __init__(self, locale_folder: str, fill_not_found: str | None = None):
+        if fill_not_found is None:
+            fill_not_found = ''
         if not os.path.exists(locale_folder):
             raise FileNotFoundError(f'locale folder {locale_folder} not found')
         self.locales_folder = locale_folder
@@ -66,7 +68,7 @@ class LocaleManager:
             if message.name == name:
                 return message
 
-        raise KeyError
+        return Message(name, {}, self._use_if_not_found)
     
     def message_names(self) -> list[str]:
         return [msg.name for msg in self._messages]
