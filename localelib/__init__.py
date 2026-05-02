@@ -38,30 +38,32 @@ class LocaleManager:
         self._use_if_not_found = fill_not_found
     
     def setup(self):
-        if self.locales_folder:
-            for filename in os.listdir(self.locales_folder):
-                if not filename.startswith('locale_') and not filename.endswith('.lc'):
-                    continue
-                self.locales.append(filename[filename.rfind('_') + 1: filename.rfind('.')])
+        if not self.locales_folder:
+            raise ValueError
+        
+        for filename in os.listdir(self.locales_folder):
+            if not filename.startswith('locale_') and not filename.endswith('.lc'):
+                continue
+            self.locales.append(filename[filename.rfind('_') + 1: filename.rfind('.')])
 
-                with open(os.path.join(self.locales_folder, filename), 'r', encoding='utf-8') as file:
-                    lines = file.read().split('\n')
-                    code = filename[filename.rfind('_') + 1: filename.rfind('.')]
-                    for entry in lines:
-                        if entry == '':
-                            continue
+            with open(os.path.join(self.locales_folder, filename), 'r', encoding='utf-8') as file:
+                lines = file.read().split('\n')
+                code = filename[filename.rfind('_') + 1: filename.rfind('.')]
+                for entry in lines:
+                    if entry == '':
+                        continue
 
-                        key, val = entry.split(': ')
-                        val = val.replace(':/ ', ': ').replace('\\n', '\n')
-                        
-                        for i, msg in enumerate(self._messages):
-                            if msg.name == key:
-                                self._messages[i].add(code, val)
-                                break
-                        else:
-                            self._messages.append(Message(key, {code: val}, self._use_if_not_found))
-                
-            return self
+                    key, val = entry.split(': ')
+                    val = val.replace(':/ ', ': ').replace('\\n', '\n')
+                    
+                    for i, msg in enumerate(self._messages):
+                        if msg.name == key:
+                            self._messages[i].add(code, val)
+                            break
+                    else:
+                        self._messages.append(Message(key, {code: val}, self._use_if_not_found))
+            
+        return self
 
     def get(self, name: str) -> Message:
         for message in self._messages:
